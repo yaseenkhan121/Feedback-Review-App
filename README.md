@@ -1,273 +1,83 @@
-I've prepared a professional `README.md` that you can copy directly into your GitHub repository.
+# 📱 Feedback Hub — Student & Company Feedback Platform
 
-````markdown
-# 📱 Feedback Hub
-
-A production-ready **Flutter + Firebase** application for collecting, managing, and analyzing feedback from **Students** and **Companies**. The app provides secure authentication, real-time feedback management, analytics, and a modern Material 3 user experience.
+A production-ready, Clean Architecture **Flutter** application integrated with **Firebase** for collecting, managing, and analyzing feedback from **Students** and **Companies**.
 
 ---
 
-## 🚀 Features
+## 🌟 Key Features
 
-### 🔐 Authentication
-- Email & Password Login
-- Google Sign-In
-- User Registration
-- Forgot Password
-- Persistent Login (Users stay logged in until they manually log out)
-- Authentication State Listener
-
-### 👤 Profile Management
-- Edit Profile
-- Upload Profile Picture
-- Crop Profile Image
-- Firebase Storage Integration
-- Real-Time Profile Updates Across the App
-
-### 💬 Feedback Management
-- Submit Feedback
-- View Feedback
-- Edit Own Feedback
-- Delete Own Feedback
-- Search Feedback
-- Filter by Category, Rating, Status
-- Sort by Latest, Oldest, Highest Rating
-- Real-Time Firestore Updates
-
-### 📊 Analytics Dashboard
-- Total Feedback
-- Average Rating
-- Feedback by Category
-- Monthly Feedback Trends
-- Student vs Company Feedback
-- Rating Distribution
-- Interactive Charts using fl_chart
-- Live Analytics from Firestore
-
-### 🎨 UI/UX
-- Material 3 Design
-- Light & Dark Theme
-- Responsive Layout
-- Smooth Animations
-- Clean Architecture
-- Reusable Components
+- **Material 3 Design System**: Modern SaaS aesthetic, HSL blue gradients (`#2563EB` to `#4F46E5`), Google Fonts Inter typography, soft card layouts, and dynamic micro-animations.
+- **Global Light & Dark Theme**: Persistent global theme toggle controlled from settings and profile screen, powered by `ThemeProvider` & `SharedPreferences`.
+- **Firebase Authentication & Persistent Session**:
+  - Email & Password login, sign up with role selection (**Student** or **Company**), password reset.
+  - Native Google Sign-In with interactive Role Selection modal for first-time users.
+  - Natively managed session persistence via `FirebaseAuth.instance.authStateChanges()`. Users remain logged in across app closure, recent app clear, and phone reboots.
+- **Cloud Firestore Database**:
+  - Real-time Firestore streams for feedback items.
+  - Role-aware CRUD (Users can edit/delete **only** their own feedback).
+  - Search by Title, Category, or Submitter Name.
+  - Multi-criteria filtering (Category, Role, Status) and sorting (Newest, Oldest, Highest/Lowest Rating).
+- **Data Visualization & Analytics Dashboard**:
+  - Real-time statistical metrics calculated live from Firestore.
+  - Interactive charts built using `fl_chart`: Category Bar Chart, Category Pie Chart, Monthly Line Chart, Rating Distribution Chart, and Weekly Activity Chart.
+- **Local Device Profile Photo Storage**:
+  - Local directory image saving with integrated 1:1 ratio square cropper (zoom, rotate, move).
+  - Real-time avatar updates synced live across all app screens.
 
 ---
 
-# 🛠 Tech Stack
-
-- Flutter
-- Firebase Authentication
-- Cloud Firestore
-- Firebase Storage
-- Provider
-- GoRouter
-- Material 3
-- fl_chart
-- image_picker
-- image_cropper
-- cached_network_image
-
----
-
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```
 lib/
-│
 ├── core/
-│   ├── constants/
-│   ├── services/
-│   ├── theme/
-│   ├── utils/
-│   └── widgets/
-│
+│   ├── constants/       # AppColors, AppTypography, AppConstants
+│   ├── services/        # Firebase & Local Storage services
+│   ├── theme/           # AppTheme (Light & Dark), ThemeProvider
+│   ├── utils/           # Validators, DateFormatter
+│   └── widgets/         # CustomButton, CustomTextField, RatingWidget, AppAvatar, etc.
 ├── features/
-│   ├── auth/
-│   ├── dashboard/
-│   ├── feedback/
-│   └── profile/
-│
-├── models/
-│
-├── firebase_options.dart
-│
-└── main.dart
+│   ├── auth/            # AuthRepository, AuthProvider, Splash, Login, SignUp, ForgotPassword
+│   ├── dashboard/       # DashboardProvider, HomeDashboard, AnalyticsDashboard (fl_chart)
+│   ├── feedback/        # FeedbackRepository, FeedbackProvider, Submit, List, Details, Edit
+│   ├── search/          # SearchScreen
+│   ├── profile/         # ProfileScreen, EditProfileScreen, ProfileProvider
+│   ├── settings/        # SettingsScreen
+│   ├── notifications/   # NotificationsScreen
+│   └── common/          # MainNavigationScreen, LoadingScreen, ErrorScreen
+├── models/              # UserModel, FeedbackModel, NotificationModel
+├── firebase_options.dart # DefaultFirebaseOptions configuration
+└── main.dart            # MultiProvider & GoRouter entrypoint
 ```
 
 ---
 
-# 🔥 Firebase Configuration
+## 🚀 Getting Started
 
-## Authentication
+### Prerequisites
+- Flutter SDK (3.0.0+)
+- Dart SDK (3.0.0+)
+- Android Studio / VS Code
 
-Enable:
-- Email & Password
-- Google Sign-In
+### Installation & Run
 
-## Firestore
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/yaseenkhan121/Feedback-Review-App.git
+   cd Feedback-Review-App
+   ```
 
-Create the following collections:
+2. **Install Dependencies**:
+   ```bash
+   flutter pub get
+   ```
 
-### users
-
-```
-uid
-name
-email
-role
-photoUrl
-createdAt
-updatedAt
-```
-
-### feedbacks
-
-```
-feedbackId
-title
-description
-rating
-category
-submittedBy
-submittedByName
-role
-status
-createdAt
-updatedAt
-```
+3. **Run Application**:
+   ```bash
+   flutter run
+   ```
 
 ---
 
-# 📦 Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/yourusername/feedback-hub.git
-```
-
-## Open Project
-
-```bash
-cd feedback-hub
-```
-
-## Install Dependencies
-
-```bash
-flutter pub get
-```
-
-## Configure Firebase
-
-```bash
-flutterfire configure
-```
-
-Add:
-
-- google-services.json (Android)
-- GoogleService-Info.plist (iOS)
-
----
-
-# ▶️ Run Application
-
-```bash
-flutter run
-```
-
----
-
-# 📈 Real-Time Features
-
-- Live Firestore Synchronization
-- Instant Feedback Updates
-- Automatic Analytics Refresh
-- Real-Time Profile Updates
-- Live Dashboard Charts
-
----
-
-# 🔒 Security
-
-- Firebase Authentication
-- Firestore Security Rules
-- Firebase Storage Rules
-- Users can edit only their own feedback
-- Secure authentication flow
-
----
-
-# 📷 Screens
-
-- Splash Screen
-- Login
-- Register
-- Home Dashboard
-- Submit Feedback
-- Feedback List
-- Feedback Details
-- Analytics Dashboard
-- Profile
-- Edit Profile
-- Settings
-
----
-
-# 📚 Main Packages
-
-```yaml
-firebase_core
-firebase_auth
-cloud_firestore
-firebase_storage
-provider
-go_router
-fl_chart
-image_picker
-image_cropper
-cached_network_image
-```
-
----
-
-# 🚀 Future Improvements
-
-- Admin Dashboard
-- Push Notifications
-- PDF Report Export
-- Excel Export
-- AI Feedback Analysis
-- Multi-language Support
-- Offline Sync
-- Advanced Search
-- Email Notifications
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome.
-
-1. Fork the repository
-2. Create a new feature branch
-3. Commit your changes
-4. Push your branch
-5. Open a Pull Request
-
----
-
-# 📄 License
-
+## 📄 License
 This project is licensed under the MIT License.
-
----
-
-# 👨‍💻 Developer
-
-Developed using **Flutter**, **Firebase**, and **Material 3** following Clean Architecture principles.
-
-⭐ If you found this project useful, consider giving it a star on GitHub!
-````
